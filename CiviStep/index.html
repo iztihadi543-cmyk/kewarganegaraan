@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CiviStep - Belajar Menjadi Warga Negara yang Baik</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>CiviStep</h1>
+                <p>Belajar hari ini, menjadi warga negara yang lebih baik di masa depan</p>
+            </div>
+            <ul class="nav-menu">
+                <li><button class="nav-btn active" data-section="home">Beranda</button></li>
+                <li><button class="nav-btn" data-section="materi">Materi</button></li>
+                <li><button class="nav-btn" data-section="quiz">Quiz</button></li>
+                <li><button class="nav-btn" data-section="refleksi">Refleksi</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Beranda Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2>Selamat Datang di CiviStep!</h2>
+                <p>Mulai perjalanan belajarmu menjadi warga negara yang bertanggung jawab.</p>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Pilih Materi</h3>
+                        <p>Pelajari 5 BAB penting Pendidikan Kewarganegaraan.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Uji Pengetahuan</h3>
+                        <p>Tes dirimu dengan quiz interaktif.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Tulis Refleksi</h3>
+                        <p>Catat pemahamanmu untuk diingat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Materi Section -->
+        <section id="materi" class="section">
+            <h2>Materi Pembelajaran</h2>
+            <div class="materi-container">
+                <div class="bab-card">
+                    <button class="bab-title">BAB 1: Pancasila</button>
+                    <div class="bab-content">
+                        <p>Pancasila adalah dasar negara Indonesia yang terdiri dari 5 sila: Ketuhanan Yang Maha Esa, Kemanusiaan yang Adil dan Beradab, Persatuan Indonesia, Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan, Keadilan Sosial bagi Seluruh Rakyat Indonesia.</p>
+                    </div>
+                </div>
+                <div class="bab-card">
+                    <button class="bab-title">BAB 2: UUD 1945</button>
+                    <div class="bab-content">
+                        <p>Undang-Undang Dasar 1945 adalah konstitusi negara Indonesia yang disahkan pada 18 Agustus 1945. Mengandung 37 pasal, 4 keaslian, dan beberapa aturan tambahan.</p>
+                    </div>
+                </div>
+                <div class="bab-card">
+                    <button class="bab-title">BAB 3: Peraturan</button>
+                    <div class="bab-content">
+                        <p>Peraturan di Indonesia meliputi UUD 1945, TAP MPR, Undang-Undang, Peraturan Pemerintah, dll. Setiap warga wajib mematuhi untuk menjaga ketertiban.</p>
+                    </div>
+                </div>
+                <div class="bab-card">
+                    <button class="bab-title">BAB 4: Budaya</button>
+                    <div class="bab-content">
+                        <p>Budaya Indonesia sangat beragam dengan ratusan suku dan adat istiadat. Toleransi dan gotong royong adalah nilai penting dalam kehidupan bermasyarakat.</p>
+                    </div>
+                </div>
+                <div class="bab-card">
+                    <button class="bab-title">BAB 5: Wawasan Nusantara</button>
+                    <div class="bab-content">
+                        <p>Wawasan Nusantara adalah cara pandang bangsa Indonesia mengenai diri dan lingkungannya sebagai kesatuan politik, ekonomi, sosial, budaya, dan hankam.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <h2>Quiz Pengetahuan Kewarganegaraan</h2>
+            <div id="quiz-container">
+                <div class="question-container" data-question="0">
+                    <h3 id="question-text">Loading...</h3>
+                    <div id="options"></div>
+                    <button id="next-btn" disabled>Next</button>
+                </div>
+                <div id="quiz-result" style="display:none;">
+                    <h3>Skor Anda: <span id="score"></span>/5</h3>
+                    <button id="restart-btn">Ulangi Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Refleksi Section -->
+        <section id="refleksi" class="section">
+            <h2>Refleksi Belajar</h2>
+            <form id="refleksi-form">
+                <textarea id="refleksi-text" placeholder="Tulis refleksi pembelajaranmu hari ini..."></textarea>
+                <button type="submit">Simpan Refleksi</button>
+            </form>
+            <div id="saved-refleksi"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
