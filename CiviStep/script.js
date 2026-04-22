@@ -1,192 +1,181 @@
-// Data Quiz (5 soal pilihan ganda)
-const questions = [
-    {
-        question: "Berapa sila dalam Pancasila?",
-        options: ["4", "5", "6", "3"],
-        correct: 1
-    },
-    {
-        question: "Tanggal disahkannya UUD 1945?",
-        options: ["17 Agustus 1945", "18 Agustus 1945", "1 Oktober 1945", "28 Oktober 1945"],
-        correct: 1
-    },
-    {
-        question: "Dasar negara Indonesia adalah?",
-        options: ["Piagam Jakarta", "Pancasila", "UUD 1945", "Rukun Negara"],
-        correct: 1
-    },
-    {
-        question: "Prinsip gotong royong termasuk dalam nilai?",
-        options: ["Pancasila", "Budaya", "Peraturan", "Wawasan Nusantara"],
-        correct: 1
-    },
-    {
-        question: "Wawasan Nusantara mencakup aspek?",
-        options: ["Politik saja", "Ekonomi saja", "Kesatuan politik, ekonomi, sosial, budaya, hankam", "Budaya saja"],
-        correct: 2
-    }
-];
+document.addEventListener('DOMContentLoaded', function () {
+  document.body.classList.add('page-loaded');
 
-let currentQuestion = 0;
-let score = 0;
-let answers = [];
+  const navButtons = document.querySelectorAll('[data-link]');
+  navButtons.forEach((button) => {
+    button.addEventListener('click', function () {
+      const nextPage = this.dataset.link;
+      if (nextPage) {
+        window.location.href = nextPage;
+      }
+    });
+  });
 
-// Navigasi sections
-document.addEventListener('DOMContentLoaded', function() {
-    const navBtns = document.querySelectorAll('.nav-btn');
-    const sections = document.querySelectorAll('.section');
-    
-    navBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const sectionId = btn.dataset.section;
-            
-            // Update active button
-            navBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // Switch sections
-            sections.forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Reset quiz if switching away/ to quiz
-            if (sectionId === 'quiz') {
-                resetQuiz();
-            } else if (document.getElementById('quiz').classList.contains('active')) {
-                // Save score to localStorage when leaving quiz
-                localStorage.setItem('civistepScore', score);
-            }
-            
-            // Load refleksi
-            if (sectionId === 'refleksi') {
-                loadRefleksi();
-            }
-        });
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mainNav = document.querySelector('.main-nav');
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
     });
-    
-    // BAB expand/collapse
-    document.querySelectorAll('.bab-title').forEach(title => {
-        title.addEventListener('click', () => {
-            const content = title.nextElementSibling;
-            content.classList.toggle('active');
-        });
-    });
-    
-    // Quiz logic
-    setupQuiz();
-    
-    // Refleksi form
+  }
+
+  const quizForm = document.getElementById('quizForm');
+  if (quizForm) {
+    initQuiz();
+  }
+
+  const refleksiForm = document.getElementById('refleksiForm');
+  if (refleksiForm) {
     setupRefleksi();
-    
-    // Load saved score on home
-    loadSavedScore();
+  }
+
+  const materiContent = document.querySelector('.materi-content');
+  if (materiContent) {
+    initMateri();
+  }
 });
 
-function setupQuiz() {
-    document.getElementById('next-btn').addEventListener('click', nextQuestion);
-    document.getElementById('restart-btn').addEventListener('click', resetQuiz);
-    
-    showQuestion();
-}
-
-function showQuestion() {
-    const qData = questions[currentQuestion];
-    document.getElementById('question-text').textContent = qData.question;
-    
-    const optionsContainer = document.getElementById('options');
-    optionsContainer.innerHTML = '';
-    
-    qData.options.forEach((option, index) => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.textContent = option;
-        div.addEventListener('click', () => selectOption(index));
-        optionsContainer.appendChild(div);
-    });
-    
-    document.getElementById('next-btn').disabled = true;
-}
-
-function selectOption(selectedIndex) {
-    document.querySelectorAll('.option').forEach((opt, index) => {
-        opt.classList.remove('selected');
-        if (index === selectedIndex) {
-            opt.classList.add('selected');
-        }
-    });
-    
-    answers[currentQuestion] = selectedIndex;
-    document.getElementById('next-btn').disabled = false;
-}
-
-function nextQuestion() {
-    if (answers[currentQuestion] === questions[currentQuestion].correct) {
-        score++;
+function initQuiz() {
+  const questions = [
+    {
+      question: 'Apa fungsi utama Pancasila sebagai dasar negara?',
+      answers: ['Menjadi pedoman hidup bangsa', 'Hanya simbol negara', 'Aturan olahraga', 'Peraturan lalu lintas'],
+      correct: 0
+    },
+    {
+      question: 'Siapa yang menyusun UUD 1945 pada masa kemerdekaan?',
+      answers: ['BPUPK dan PPKI', 'Majelis Ulama', 'Badan Perdagangan', 'Komite Olahraga'],
+      correct: 0
+    },
+    {
+      question: 'Hierarki perundang-undangan tertinggi di Indonesia adalah:',
+      answers: ['UUD 1945', 'Peraturan Daerah', 'Undang-undang', 'Peraturan Presiden'],
+      correct: 0
+    },
+    {
+      question: 'Kearifan lokal penting untuk:',
+      answers: ['Menjaga budaya dan lingkungan', 'Menolak perubahan', 'Meningkatkan konflik', 'Mengurangi pendidikan'],
+      correct: 0
+    },
+    {
+      question: 'Wawasan Nusantara membantu bangsa menjaga:',
+      answers: ['Persatuan dan kedaulatan', 'Hanya ekonomi', 'Hanya pariwisata', 'Hukum internasional'],
+      correct: 0
     }
-    
-    currentQuestion++;
-    
-    if (currentQuestion < questions.length) {
-        showQuestion();
+  ];
+
+  const questionContainer = document.getElementById('quizQuestions');
+  const quizResult = document.getElementById('quizResult');
+  const resultText = document.getElementById('resultText');
+  const resultScore = document.getElementById('resultScore');
+
+  questions.forEach((item, index) => {
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    const questionTitle = document.createElement('h3');
+    questionTitle.textContent = `Soal ${index + 1}: ${item.question}`;
+    block.appendChild(questionTitle);
+
+    const optionList = document.createElement('div');
+    optionList.className = 'quiz-options';
+
+    item.answers.forEach((answer, answerIndex) => {
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = `question-${index}`;
+      input.value = answerIndex;
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(answer));
+      optionList.appendChild(label);
+    });
+
+    block.appendChild(optionList);
+    questionContainer.appendChild(block);
+  });
+
+  document.getElementById('quizForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    let score = 0;
+    questions.forEach((item, index) => {
+      const selected = document.querySelector(`input[name='question-${index}']:checked`);
+      if (selected && Number(selected.value) === item.correct) {
+        score += 1;
+      }
+    });
+
+    const percent = Math.round((score / questions.length) * 100);
+    if (percent >= 80) {
+      resultText.textContent = 'Sangat Baik!';
+      resultScore.textContent = `Nilai: ${percent}%`;
     } else {
-        showResult();
+      resultText.textContent = 'Perlu belajar lagi';
+      resultScore.textContent = `Nilai: ${percent}%`;
     }
+    quizResult.classList.remove('hidden');
+    quizResult.scrollIntoView({ behavior: 'smooth' });
+  });
 }
 
-function showResult() {
-    document.querySelector('.question-container').style.display = 'none';
-    document.getElementById('quiz-result').style.display = 'block';
-    document.getElementById('score').textContent = score;
-    localStorage.setItem('civistepScore', score);
-}
-
-function resetQuiz() {
-    currentQuestion = 0;
-    score = 0;
-    answers = [];
-    document.querySelector('.question-container').style.display = 'block';
-    document.getElementById('quiz-result').style.display = 'none';
-    document.getElementById('next-btn').disabled = true;
-    showQuestion();
+function initMateri() {
+  const babHeaders = document.querySelectorAll('.materi-card h3');
+  babHeaders.forEach(header => {
+    header.style.userSelect = 'none';
+    header.addEventListener('click', () => {
+      const card = header.closest('.materi-card');
+      card.classList.toggle('expanded');
+    });
+  });
 }
 
 function setupRefleksi() {
-    document.getElementById('refleksi-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const text = document.getElementById('refleksi-text').value;
-        if (text.trim()) {
-            const refleksi = JSON.parse(localStorage.getItem('civistepRefleksi') || '[]');
-            refleksi.push({
-                date: new Date().toLocaleDateString('id-ID'),
-                text: text
-            });
-            localStorage.setItem('civistepRefleksi', JSON.stringify(refleksi));
-            document.getElementById('refleksi-text').value = '';
-            loadRefleksi();
-            alert('Refleksi berhasil disimpan!');
-        }
-    });
-}
+  const form = document.getElementById('refleksiForm');
+  const inputPahami = document.getElementById('pahami');
+  const inputKesulitan = document.getElementById('kesulitan');
+  const inputPengalaman = document.getElementById('pengalaman');
+  const savedList = document.getElementById('savedRefleksi');
 
-function loadRefleksi() {
-    const refleksi = JSON.parse(localStorage.getItem('civistepRefleksi') || '[]');
-    const container = document.getElementById('saved-refleksi');
-    
-    if (refleksi.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #666;">Belum ada refleksi yang disimpan.</p>';
-        return;
+  loadRefleksi();
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const data = {
+      tanggal: new Date().toLocaleDateString('id-ID'),
+      pahami: inputPahami.value.trim(),
+      kesulitan: inputKesulitan.value.trim(),
+      pengalaman: inputPengalaman.value.trim()
+    };
+
+    if (!data.pahami && !data.kesulitan && !data.pengalaman) {
+      return;
     }
-    
-    container.innerHTML = refleksi.map(r => `
-        <div style="border-left: 4px solid #007BFF; padding: 1rem; margin-bottom: 1rem; background: #f8f9fa;">
-            <strong>${r.date}</strong>
-            <p>${r.text}</p>
-        </div>
+
+    const stored = JSON.parse(localStorage.getItem('civistepRefleksi') || '[]');
+    stored.unshift(data);
+    localStorage.setItem('civistepRefleksi', JSON.stringify(stored));
+    inputPahami.value = '';
+    inputKesulitan.value = '';
+    inputPengalaman.value = '';
+    loadRefleksi();
+  });
+
+  function loadRefleksi() {
+    const entries = JSON.parse(localStorage.getItem('civistepRefleksi') || '[]');
+    if (!savedList) return;
+    if (entries.length === 0) {
+      savedList.innerHTML = '<p>Tidak ada catatan refleksi. Tuliskan pengalaman belajarmu di atas.</p>';
+      return;
+    }
+
+    savedList.innerHTML = entries.map((item) => `
+      <div class="refleksi-entry">
+        <strong>${item.tanggal}</strong>
+        <p><strong>Apa yang dipahami:</strong> ${item.pahami}</p>
+        <p><strong>Kesulitan:</strong> ${item.kesulitan}</p>
+        <p><strong>Pengalaman belajar:</strong> ${item.pengalaman}</p>
+      </div>
     `).join('');
+  }
 }
 
-function loadSavedScore() {
-    const savedScore = localStorage.getItem('civistepScore');
-    if (savedScore && document.getElementById('home').classList.contains('active')) {
-        // Could display on home if wanted, but keeping simple
-    }
-}
+

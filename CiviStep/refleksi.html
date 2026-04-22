@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refleksi | CiviStep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-card">
+      <header class="page-header">
+        <div class="brand-wrap">
+          <div>
+            <h1 class="site-title">CiviStep</h1>
+            <p class="site-subtitle">Refleksi Belajar</p>
+          </div>
+          <button class="menu-toggle" aria-label="Buka menu" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <nav class="main-nav">
+          <a href="index.html">Beranda</a>
+          <a href="tentang.html">Tentang Media</a>
+          <a href="sasaran.html">Sasaran Media</a>
+          <a href="profil.html">Profil Pengembang</a>
+        </nav>
+      </header>
+      <main class="refleksi-content">
+        <div class="page-title-box">
+          <div class="title-decor"></div>
+          <h1>Refleksi Belajar</h1>
+        </div>
+        <form id="refleksiForm" class="refleksi-card">
+          <label for="pahami">Apa yang dipahami</label>
+          <textarea id="pahami" placeholder="Tuliskan apa yang sudah kamu pahami" required></textarea>
+          <label for="kesulitan">Kesulitan</label>
+          <textarea id="kesulitan" placeholder="Tuliskan kesulitan yang kamu rasakan" required></textarea>
+          <label for="pengalaman">Pengalaman belajar</label>
+          <textarea id="pengalaman" placeholder="Tuliskan pengalaman belajarmu" required></textarea>
+          <button type="submit" class="submit-btn">Simpan Refleksi</button>
+        </form>
+        <div id="savedRefleksi" class="refleksi-list"></div>
+        <div class="nav-footer">
+          <a class="back-link" href="quiz.html">← Kembali</a>
+          <a class="next-link" href="index.html">Selesai</a>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
